@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-
 type ItemProps = {
   message: string;
 };
@@ -34,13 +33,13 @@ const Item = ({ message }: ItemProps) => {
 
 type LaneItem = {
   message: string;
-  index: number;
-  removeItem: Function;
 };
 
-const Lane = () => {
-  const [items, setItems] = useState<LaneItem[]>([{ message: 'test', removeItem: () => {}, index: 0, }]);
+type LaneProps = {
+  items: LaneItem[];
+};
 
+const Lane = ({ items }: LaneProps) => {
   return (
     <div>
       <ul>
@@ -49,7 +48,7 @@ const Lane = () => {
             <span>
               {item.message}
               <button
-                onClick={e => removeItemFromLane(index)}
+                onClick={e => {}}
               >
                 +
               </button>
@@ -65,24 +64,29 @@ const mockItem = {
   message: 'test',
 };
 
-const mockLanes = {
-  "Bob": {
+const mockLanes = [
+  {
+    name: "Bob",
     items: [
       mockItem,
     ]
   },
-  "George": {
+  {
+    name: "George",
     items: [
       mockItem,
     ]
   }
-};
+];
 
-type Lanes = LaneItem[];
+type Lane = {
+  name: string;
+  items: LaneItem[];
+}
 
 
 export default function TorcPage() {
-  const [lanes, setLanes] = useState<Lanes>(mockLanes);
+  const [lanes, setLanes] = useState<Lane[]>(mockLanes);
 
   const removeItemFromLane = (index: number) => {
     const newItems = removeItem(index, items);
