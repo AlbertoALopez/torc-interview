@@ -7,7 +7,7 @@
 .lane {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 10rem;
   background-color: antiquewhite;
@@ -46,5 +46,6 @@
 
 .addNewItemButton {
   margin-bottom: 1rem;
+  margin-top: auto;
   width: 5rem;
 }

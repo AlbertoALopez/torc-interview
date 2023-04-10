@@ -102,9 +102,9 @@ type LaneProps = {
 export default function TorcPage() {
   const [lanes, setLanes] = useState<Lane[]>(mockLanes);
 
-  const removeItemFromLane = (itemIndex: number, lane: Lane) => {
-    const newItems = removeItem(itemIndex, lane.items);
-    return { ...lane, items: newItems };
+  const removeItemFromLane = (itemIndex: number, laneIndex: number) => {
+    const newItems = removeItem(itemIndex, lanes[laneIndex].items);
+    return { ...lanes[laneIndex], items: newItems };
   };
 
   const addItemToLane = (itemIndex: number, laneIndex: number, item: LaneItem) => {
@@ -118,7 +118,7 @@ export default function TorcPage() {
     originalLaneIndex: number,
     item: LaneItem
   ) => {
-    const oldLane = removeItemFromLane(itemIndex, lanes[originalLaneIndex]);
+    const oldLane = removeItemFromLane(itemIndex, originalLaneIndex);
     const newLane = addItemToLane(itemIndex, newLaneIndex, item);
 
     setLanes((lanes) => lanes.map((lane, index) => {
