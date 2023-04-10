@@ -20,10 +20,16 @@ type LaneItem = {
 
 enum POSITION {
   DECREMENT,
-  INCREMENT
+  INCREMENT,
+  END
 };
 
 const Lane = ({ items, moveItemToLane, name, canDecrementItem, canIncrementItem }: LaneProps) => {
+  const addNewItemToLane = () => {
+    let newItem = prompt('What to do next?');
+    moveItemToLane({ message: newItem }, null, POSITION.END);
+  };
+
   return (
     <div className={styles.lane}>
       <div className={styles.laneHeader}>
@@ -50,6 +56,9 @@ const Lane = ({ items, moveItemToLane, name, canDecrementItem, canIncrementItem 
           </li>
         ))}
       </ul>
+      <button className={styles.addNewItemButton} onClick={addNewItemToLane}>
+        + Add a task
+      </button>
     </div>
   );
 };
@@ -109,11 +118,11 @@ export default function TorcPage() {
     originalLaneIndex: number,
     item: LaneItem
   ) => {
-    const newLane = addItemToLane(itemIndex, newLaneIndex, item);
     const oldLane = removeItemFromLane(itemIndex, lanes[originalLaneIndex]);
+    const newLane = addItemToLane(itemIndex, newLaneIndex, item);
 
     setLanes((lanes) => lanes.map((lane, index) => {
-      if (index === originalLaneIndex) {
+      if (index === originalLaneIndex && (originalLaneIndex !== newLaneIndex)) {
         return oldLane;
       } else if (index === newLaneIndex) {
         return newLane;
@@ -141,7 +150,9 @@ export default function TorcPage() {
               items={lane.items}
               key={index}
               moveItemToLane={(item: LaneItem, itemIndex: number, position: POSITION) => {
-                if (position === POSITION.INCREMENT) {
+                if (position === POSITION.END) {
+                  moveItemToLane(lane.items.length, index, index, item);
+                } else if (position === POSITION.INCREMENT) {
                   moveItemToLane(itemIndex, index + 1, index, item);
                 } else {
                   moveItemToLane(itemIndex, index - 1, index, item);
