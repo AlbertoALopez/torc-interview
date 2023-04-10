@@ -26,10 +26,12 @@ enum POSITION {
 const Lane = ({ items, moveItemToLane, name, canDecrementItem, canIncrementItem }: LaneProps) => {
   return (
     <div className={styles.lane}>
-      <h1>{name}</h1>
-      <ul>
+      <div className={styles.laneHeader}>
+        <span className={styles.laneName}>{name}</span>
+      </div>
+      <ul className={styles.laneItemList}>
         {items.map((item, index) => (
-          <li key={index}>
+          <li key={index} className={styles.laneItem}>
             <button
               disabled={!canDecrementItem}
               onClick={() => moveItemToLane(item, index, POSITION.DECREMENT)}
@@ -38,13 +40,13 @@ const Lane = ({ items, moveItemToLane, name, canDecrementItem, canIncrementItem 
             </button>
             <span>
               {item.message}
-              <button
+            </span>
+            <button
                 disabled={!canIncrementItem}
                 onClick={() => moveItemToLane(item, index, POSITION.INCREMENT)}
               >
                 +
               </button>
-            </span>
           </li>
         ))}
       </ul>
@@ -110,19 +112,15 @@ export default function TorcPage() {
     const newLane = addItemToLane(itemIndex, newLaneIndex, item);
     const oldLane = removeItemFromLane(itemIndex, lanes[originalLaneIndex]);
 
-    setLanes((lanes) => {
-      const newLanes = lanes.map((lane, index) => {
-        if (index === originalLaneIndex) {
-          return oldLane;
-        } else if (index === newLaneIndex) {
-          return newLane;
-        }
+    setLanes((lanes) => lanes.map((lane, index) => {
+      if (index === originalLaneIndex) {
+        return oldLane;
+      } else if (index === newLaneIndex) {
+        return newLane;
+      }
 
-        return lane;
-      });
-
-      return newLanes;
-    });
+      return lane;
+    }));
   };
 
   const canIncrementItem = useCallback((index: number) => {

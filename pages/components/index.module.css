@@ -7,4 +7,34 @@
 .lane {
   flex-direction: column;
   justify-content: center;
+  width: 10rem;
+  background-color: antiquewhite;
+  margin: 1rem;
+}
+
+.laneHeader {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: black;
+}
+
+.laneName {
+  font-weight: bold;
+  color: white;
+}
+
+.laneItemList {
+  list-style: none;
+  padding: 0;
+}
+
+.laneItem {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  width: 100%;
 }
