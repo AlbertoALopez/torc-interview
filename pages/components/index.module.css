@@ -1,0 +1,10 @@
+.grid {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.lane {
+  flex-direction: column;
+  justify-content: center;
+}
